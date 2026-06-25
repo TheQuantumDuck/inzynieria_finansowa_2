@@ -77,7 +77,7 @@ class CoNBlackScholes:
             delta_premium=delta_premium,
             base=base,
         )
-        return buy_price - sell_price
+        return (buy_price - sell_price) / (2 * dK)
 
 
 class AoNBlackScholes:
