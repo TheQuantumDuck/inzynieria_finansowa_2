@@ -112,3 +112,91 @@ def strike_for_delta(
         return K_0
     msg = "max_iter reached without convergence"
     raise ValueError(msg)
+
+
+def vanna_volga_cost_coefficients(
+    df_d: float,
+    df_f: float,
+    S_t: float,
+    sigma_atm: float,
+    sigma_25C: float,
+    sigma_25P: float,
+    t: date,
+    T: date,
+    delta_forward: bool,
+    delta_premium: bool,
+    base: int,
+):
+    K_25C = strike_for_delta(
+        delta=0.25,
+        option_type=OptionType.CALL,
+        df_d=df_d,
+        df_f=df_f,
+        S_t=S_t,
+        sigma=sigma_25C,
+        t=t,
+        T=T,
+        forward=delta_forward,
+        premium=delta_premium,
+        base=base,
+    )
+    K_25P = strike_for_delta(
+        delta=0.25,
+        option_type=OptionType.PUT,
+        df_d=df_d,
+        df_f=df_f,
+        S_t=S_t,
+        sigma=sigma_25P,
+        t=t,
+        T=T,
+        forward=delta_forward,
+        premium=delta_premium,
+        base=base,
+    )
+    call = VanillaOptionBlackSholes(T=T, K=K_25C, option_type=OptionType.CALL)
+    put = VanillaOptionBlackSholes(T=T, K=K_25P, option_type=OptionType.PUT)
+    C_25 = call.price(
+        df_d=df_d,
+        df_f=df_f,
+        S_t=S_t,
+        sigma=sigma_25C,
+        t=t,
+        base=base,
+    )
+    C_atm = call.price(
+        df_d=df_d,
+        df_f=df_f,
+        S_t=S_t,
+        sigma=sigma_atm,
+        t=t,
+        base=base,
+    )
+    P_25 = put.price(
+        df_d=df_d,
+        df_f=df_f,
+        S_t=S_t,
+        sigma=sigma_25P,
+        t=t,
+        base=base,
+    )
+    P_atm = call.price(
+        df_d=df_d,
+        df_f=df_f,
+        S_t=S_t,
+        sigma=sigma_atm,
+        t=t,
+        base=base,
+    )
+    vanna_25C, volga_25C = call.vanna_volga(
+        df_d=df_d, df_f=df_f, S_t=S_t, sigma=sigma_25C, t=t, base=base
+    )
+    vanna_25P, volga_25P = put.vanna_volga(
+        df_d=df_d, df_f=df_f, S_t=S_t, sigma=sigma_25P, t=t, base=base
+    )
+    V_RR = C_25 - P_25
+    V_RR_sigatm = C_atm - P_atm
+    C_Vanna_RR = V_RR - V_RR_sigatm
+    Vanna_RR = vanna_25C - vanna_25P
+    C_Volga_BF = 0.5 * (C_25 + P_25 - C_atm - P_atm)
+    Volga_BF = 0.5 * (volga_25C + volga_25P)
+    return (C_Vanna_RR / Vanna_RR, C_Volga_BF / Volga_BF)
