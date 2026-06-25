@@ -73,6 +73,7 @@ class VanillaOptionBlackSholes:
         self,
         df_d: float,
         df_f: float,
+        p: float,
         S_t: float,
         sigma_atm: float,
         sigma_25C: float,
@@ -102,7 +103,7 @@ class VanillaOptionBlackSholes:
         V_BS = self.price(
             df_d=df_d, df_f=df_f, S_t=S_t, sigma=sigma_atm, t=t, base=base
         )
-        return V_BS + c_1 * vanna + c_2 * volga
+        return V_BS + p * (c_1 * vanna + c_2 * volga)
 
 
 def strike_for_delta(
