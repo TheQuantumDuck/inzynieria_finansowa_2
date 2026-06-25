@@ -45,10 +45,9 @@ class CoNBlackScholes:
     ) -> float:
         T = self.T
         K = self.K
+        K_b, K_s = K + dK, K - dK
         if self.type == OptionType.CALL:
-            K_b, K_s = K - dK, K + dK
-        else:
-            K_b, K_s = K + dK, K - dK
+            K_b, K_s = K_s, K_b
         option_buy = VanillaOptionBlackSholes(T=T, K=K_b, option_type=self.type)
         option_sell = VanillaOptionBlackSholes(T=T, K=K_s, option_type=self.type)
         buy_price = option_buy.vanna_volga_price(
