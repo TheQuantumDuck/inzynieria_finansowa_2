@@ -215,7 +215,7 @@ def vanna_volga_cost_coefficients(
         t=t,
         base=base,
     )
-    P_atm = call.price(
+    P_atm = put.price(
         df_d=df_d,
         df_f=df_f,
         S_t=S_t,
