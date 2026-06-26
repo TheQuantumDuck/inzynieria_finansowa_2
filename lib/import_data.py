@@ -4,8 +4,6 @@ from dataclasses import dataclass
 from .dates import year_fraction
 
 file = "market_data.xlsx"
-vol = pd.read_excel(file, sheet_name="Volatilities")
-rates = pd.read_excel(file, sheet_name="SwapPoints&Rates")
 
 @dataclass
 class Market:
