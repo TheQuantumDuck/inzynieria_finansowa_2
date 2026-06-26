@@ -12,8 +12,8 @@ class Market:
     expiry: pd.Timestamp
     date: pd.Timestamp
     maturity: pd.Timestamp
-    FX_Spot: float
-    FX_Forward: float
+    spot: float
+    forward: float
     pln_rate: float
     eur_rate: float
     atm: float
