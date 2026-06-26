@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from datetime import date
+from .dates import year_fraction
 
 file = "market_data.xlsx"
 vol = pd.read_excel(file, sheet_name="Volatilities")
