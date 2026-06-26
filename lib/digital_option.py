@@ -83,4 +83,3 @@ class OneTouchBlackScholes:
             (B_to_S**exp_1) * NormalDist().cdf(-eta * d_p)
             + (B_to_S**exp_2) * NormalDist().cdf(eta * d_m)
         )
->>>>>>> a48e1e1 (BS price added)
