@@ -71,4 +71,4 @@ def get_rates(market, imply_PLN: bool):
     r_f=r_EUR*tau_EUR/tau_vol  
     df_f=np.exp(-r_f*tau_vol)
     df_d=np.exp(-r_d*tau_vol)
-    return(r_d,r_f)
+    return(r_d,r_f,df_f,df_d)
