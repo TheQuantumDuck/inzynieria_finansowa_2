@@ -62,8 +62,7 @@ def load_market(file: str, tenor: str) -> Market:
         rr10=vol_row["10RR"],
         bf10=vol_row["10BF"],
         delta_forward=delta_forward,
-        delta_premium=delta_premium
-    )
+        delta_premium=delta_premium )
 class MarketEngine:
     def __init__(self, market: Market):
         self.m = market
@@ -71,7 +70,6 @@ class MarketEngine:
         tau_vol = year_fraction(self.m.start, self.m.expiry, 365)
         tau_pln = year_fraction(self.m.date, self.m.maturity, 365)
         tau_eur = year_fraction(self.m.date, self.m.maturity, 360)
-
         return tau_vol, tau_pln, tau_eur
     def rates_dfs(self, imply_pln: bool):
 
