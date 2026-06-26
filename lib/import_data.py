@@ -14,6 +14,8 @@ def clean_columns(df):
         .str.replace("%", "pct")
     )
     return df
+
+
 vol_names = clean_columns(vol_raw)
 rates_names = clean_columns(rates_raw)
 
