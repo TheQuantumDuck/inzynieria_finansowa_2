@@ -6,23 +6,6 @@ file = "market_data.xlsx"
 vol = pd.read_excel(file, sheet_name="Volatilities")
 rates = pd.read_excel(file, sheet_name="SwapPoints&Rates")
 
-def clean_columns(df):
-    df.columns = (
-    df.columns.astype(str)
-        .str.strip()
-        .str.replace(" ", "_")
-        .str.replace("%", "pct")
-    )
-    return df
-
-
-vol_names = clean_columns(vol_raw)
-rates_names = clean_columns(rates_raw)
-
-print("Dostępne Tenory")
-print(vol['Tenor'].to_string(index=False))
-choice = input("Wybierz tenor:")
-
 def get_market_data(tenor, vol, rates):
     vol_row = vol[vol["Tenor"] == tenor]
     rate_row = rates[rates["Tenor"] == tenor]
