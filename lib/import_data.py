@@ -56,6 +56,7 @@ def get_market_data(tenor, vol, rates):
         "SwapPoints": rate_row["Swap Points"]
     } 
     return data
+    
 def get_rates(market, imply_PLN: bool):
     tau_vol=year_fraction(market["Start"], market["End"], 365)
     tau_PLN=year_fraction(market["Date"], market["Maturity"], 365)
@@ -68,4 +69,6 @@ def get_rates(market, imply_PLN: bool):
         r_EUR=(np.log(market["FX_Forward"]/market["FX_Spot"])+r_PLN*tau_PLN)/tau_EUR
     r_d=r_PLN*tau_PLN/tau_vol
     r_f=r_EUR*tau_EUR/tau_vol  
+    df_f=np.exp(-r_f*tau_vol)
+    df_d=np.exp(-r_d*tau_vol)
     return(r_d,r_f)
