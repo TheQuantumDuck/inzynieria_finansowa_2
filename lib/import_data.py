@@ -3,10 +3,10 @@ import numpy as np
 from dataclasses import dataclass
 from .dates import year_fraction
 
-file = "market_data.xlsx"
+file = "market_data.xlsx"  #plik z danymi
 
-@dataclass
-class Market:
+@dataclass  #klasa danych zawierająca surowe dane z rynku
+class Market:   
     tenor: str
     start: pd.Timestamp
     expiry: pd.Timestamp
@@ -23,7 +23,7 @@ class Market:
     bf10: float
     delta_forward: bool
     delta_premium: bool
-def load_market(file: str, tenor: str) -> Market:
+def load_market(file: str, tenor: str) -> Market:    #wczytywanie danych rynkowych dla danego tenoru np. 1W, 1M ect
     vol = pd.read_excel(file, sheet_name="Volatilities")
     rates = pd.read_excel(file, sheet_name="SwapPoints&Rates")
 
@@ -43,10 +43,10 @@ def load_market(file: str, tenor: str) -> Market:
     delta_premium= vol_row["Is premium in"]=="True"
         
     spot = vol_row["FX_spot"]
-    forward = spot + rate_row["Swap Points"] / 10000
+    forward = spot + rate_row["Swap Points"] / 10000  #kalkulacje niektórych danych
     pln_rate=rate_row["PLN MM rate"]/100
     eur_rate=rate_row["EUR MM rate"]/100
-    return Market(
+    return Market(   #funkcja zwraca rynek jako zbiór zmiennych
         tenor=tenor,
         start=vol_row["Date"],
         expiry=vol_row["Expiry"],
@@ -63,7 +63,7 @@ def load_market(file: str, tenor: str) -> Market:
         bf10=vol_row["10BF"],
         delta_forward=delta_forward,
         delta_premium=delta_premium )
-class MarketEngine:
+class MarketEngine:    #silnik będący klasą, wczytuje dane rynkowe wczytane wcześniej, dodaje r_d i r_f zgodne z instrukacją oraz df_f i df_d (niestety jedynie prosta krzywa została zaimplementowana)
     def __init__(self, market: Market):
         self.m = market
     def taus(self):
@@ -71,7 +71,7 @@ class MarketEngine:
         tau_pln = year_fraction(self.m.date, self.m.maturity, 365)
         tau_eur = year_fraction(self.m.date, self.m.maturity, 360)
         return tau_vol, tau_pln, tau_eur
-    def rates_dfs(self, imply_pln: bool):
+    def rates_dfs(self, imply_pln: bool): #funkcja implikująca jedną walutę przez drugą
 
         tau_vol, tau_pln, tau_eur = self.taus()
 
