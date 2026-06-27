@@ -155,11 +155,11 @@ class NoTouchBlackScholes:
     def __init__(
         self,
         T: date,
-        K: float,
+        B: float,
         bound_type: BoundType,
     ) -> None:
         self.T = T
-        self.B = K
+        self.B = B
         self.bound_type = bound_type
 
     def price(
