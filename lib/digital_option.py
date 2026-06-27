@@ -3,8 +3,8 @@ from enum import IntEnum
 from math import log, sqrt
 from statistics import NormalDist
 
-from dates import year_fraction
-from vanilla_option import vanna_volga_cost_coefficients
+from .dates import year_fraction
+from .vanilla_option import vanna_volga_cost_coefficients
 
 
 def theta(df_d: float, df_f: float, sigma: float, tau: float) -> tuple[float, float]:

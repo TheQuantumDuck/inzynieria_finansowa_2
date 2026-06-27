@@ -3,7 +3,7 @@ from enum import IntEnum
 from math import exp, log, sqrt
 from statistics import NormalDist
 
-from dates import year_fraction
+from .dates import year_fraction
 
 
 def d(
