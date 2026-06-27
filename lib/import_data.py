@@ -5,6 +5,8 @@ from .dates import year_fraction
 
 file = "market_data.xlsx"  #plik z danymi
 
+#w tym pliku AI pomogło w przekształceniu składni z poziomu funkcji do poziomu klas danych, jednak wyłącznie strukturę, formuły pisane ręcznie były.
+
 @dataclass  #klasa danych zawierająca surowe dane z rynku
 class Market:   
     tenor: str
