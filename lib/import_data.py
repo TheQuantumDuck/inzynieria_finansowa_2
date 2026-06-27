@@ -44,6 +44,8 @@ def load_market(file: str, tenor: str) -> Market:
         
     spot = vol_row["FX_spot"]
     forward = spot + rate_row["Swap Points"] / 10000
+    pln_rate=rate_row["PLN MM rate"]/100
+    eur_rate=rate_row["EUR MM rate"]/100
     return Market(
         tenor=tenor,
         start=vol_row["Date"],
@@ -52,8 +54,8 @@ def load_market(file: str, tenor: str) -> Market:
         maturity=rate_row["Maturity"],
         spot=spot,
         forward=forward,
-        pln_rate=rate_row["PLN MM rate"],
-        eur_rate=rate_row["EUR MM rate"],
+        pln_rate=pln_rate,
+        eur_rate=eur_rate,
         atm=vol_row["ATM"],
         rr25=vol_row["25RR"],
         bf25=vol_row["25BF"],
