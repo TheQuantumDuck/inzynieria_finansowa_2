@@ -127,9 +127,9 @@ def strike_for_delta(
     a = 0.5 * sigma2 * tau
     b = sigma * sqrt(tau)
     if forward:
-        d_1 = option_type * NormalDist().inv_cdf(option_type * delta)
+        d_1 = option_type * NormalDist().inv_cdf(delta)
     else:
-        d_1 = option_type * NormalDist().inv_cdf(option_type * delta / df_f)
+        d_1 = option_type * NormalDist().inv_cdf(delta / df_f)
     K_0 = F * exp(a - b * d_1)
     if premium:
         for _ in range(max_iter):
