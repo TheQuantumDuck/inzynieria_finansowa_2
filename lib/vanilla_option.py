@@ -134,7 +134,7 @@ def strike_for_delta(
     if premium:
         for _ in range(max_iter):
             u = (
-                option_type * delta * F / K_0
+                abs(delta) * F / K_0
                 if forward
                 else option_type * delta * S_t / (K_0 * df_d)
             )
