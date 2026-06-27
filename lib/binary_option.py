@@ -25,7 +25,7 @@ class CoNBlackScholes:
             tau=tau,
         )
         omega = self.type
-        con = df_d * K * NormalDist().cdf(omega * d_2)
+        con = df_d * NormalDist().cdf(omega * d_2)
         return con
 
     def vanna_volga_price(
